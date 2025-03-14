@@ -146,7 +146,7 @@ export default function Home() {
     );
   };
 
-  const [openedEnv, setopendedEnv] = useState(null);
+  const [openedEnv, setopendedEnv] = useState<string | null>(null);
 
   interface HandleEnvClickProps {
     preset: string;
@@ -388,7 +388,7 @@ export default function Home() {
               <div
                 key={item.name}
                 className="rounded-lg p-6 bg-black flex gap-8 items-center transition-colors overflow-hidden cursor-pointer"
-                onClick={() => setopendedEnv(openedEnv)}
+                onClick={() => setopendedEnv(item.name)}
                 
               >
                 <div className="h-12 w-12 rounded-full bg-[#3a558c] flex items-center justify-center" >
@@ -413,7 +413,7 @@ export default function Home() {
                 camera={{ position: [0, 1, 5] }}
               >
                 <ambientLight intensity={0.5} />
-                <Environment preset={openedEnv} background />
+                <ShowEnvironment preset={openedEnv}  />
                 <OrbitControls enableZoom />
               </Canvas>
             </div>
