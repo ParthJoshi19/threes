@@ -3,7 +3,8 @@
 import { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
-import {Mesh} from "three";
+import { Mesh } from "three";
+import {motion} from "framer-motion";
 import {
   OrbitControls,
   useGLTF,
@@ -20,7 +21,7 @@ interface ModelProps {
   position?: [number, number, number];
   rotation?: [number, number, number];
 }
-function Model(props:ModelProps) {
+function Model(props: ModelProps) {
   const { scene } = useGLTF(
     "https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf"
   );
@@ -28,10 +29,10 @@ function Model(props:ModelProps) {
 }
 
 interface RotatingShapes {
-  type: string
+  type: string;
 }
 
-function RotatingShape({ type }:RotatingShapes) {
+function RotatingShape({ type }: RotatingShapes) {
   const ref = useRef<Mesh | null>(null);
 
   useFrame(() => {
@@ -83,6 +84,37 @@ function CameraRig() {
   return null;
 }
 
+interface Env {
+  preset: string;
+}
+
+function ShowEnvironment({ preset }: Env) {
+  switch (preset) {
+    case "sunset":
+      return <Environment preset="sunset" background blur={0} />;
+    case "dawn":
+      return <Environment preset="dawn" background blur={0} />;
+    case "night":
+      return <Environment preset="night" background blur={0} />;
+    case "warehouse":
+      return <Environment preset="warehouse" background blur={0} />;
+    case "forest":
+      return <Environment preset="forest" background blur={0} />;
+    case "apartment":
+      return <Environment preset="apartment" background blur={0} />;
+    case "studio":
+      return <Environment preset="studio" background blur={0} />;
+    case "city":
+      return <Environment preset="city" background blur={0} />;
+    case "park":
+      return <Environment preset="park" background blur={0} />;
+    case "lobby":
+      return <Environment preset="lobby" background blur={0} />;
+    default:
+      return null;
+  }
+}
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -112,6 +144,12 @@ export default function Home() {
         <meshStandardMaterial color="white" />
       </mesh>
     );
+  };
+
+  const [openedEnv, setopendedEnv] = useState(null);
+
+  const handleEnvClick = (preset) => {
+    setopendedEnv(preset);
   };
 
   return (
@@ -170,7 +208,7 @@ export default function Home() {
             <Link href="#showcase" className=" transition-colors">
               Showcase
             </Link>
-            <Link href="#contact" className=" transition-colors">
+            <Link href="#services" className=" transition-colors">
               Contact
             </Link>
           </nav>
@@ -198,7 +236,7 @@ export default function Home() {
 
       {/* Mobile menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 p-4 flex flex-col">
+        <div className="fixed inset-0 z-50 p-4 flex flex-col bg-black">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
               <Canvas
@@ -244,7 +282,7 @@ export default function Home() {
               Showcase
             </Link>
             <Link
-              href="#contact"
+              href="#services"
               className="text-xl py-2  transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
@@ -252,7 +290,7 @@ export default function Home() {
             </Link>
           </nav>
 
-          <Button className="mt-auto mb-8 bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-600 hover:to-blue-600">
+          <Button className="mt-auto mb-8 bg-black border-2 border-white">
             <Link
               href="#features"
               className="text-xl py-2  transition-colors"
@@ -325,11 +363,63 @@ export default function Home() {
             </Canvas>
           </div>
         </div>
-
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-black/20 pointer-events-none"></div> */}
       </section>
 
-      {/* Features Section */}
+
+      <section className="relative ">
+        <div className="text-center w-full h-full px-4">
+          <h3 className="text-3xl text-black md:text-5xl font-bold mb-4">
+            Want to Explore?
+          </h3>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { name: "sunset", bg_img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvgF9yUTGoqYHUpeBX2EIleyAHJiv59BVxgA&s" },
+              { name: "dawn", bg_img: "https://source.unsplash.com/600x400/?dawn" },
+              { name: "night", bg_img: "https://source.unsplash.com/600x400/?night" },
+              { name: "warehouse", bg_img: "https://source.unsplash.com/600x400/?warehouse" },
+              { name: "forest", bg_img: "https://source.unsplash.com/600x400/?forest" },
+              { name: "apartment", bg_img: "https://source.unsplash.com/600x400/?apartment" },
+              { name: "studio", bg_img: "https://source.unsplash.com/600x400/?studio" },
+              { name: "city", bg_img: "https://source.unsplash.com/600x400/?city" },
+              { name: "park", bg_img: "https://source.unsplash.com/600x400/?park" },
+              { name: "lobby", bg_img: "https://source.unsplash.com/600x400/?lobby" },
+            ].map((item, index) => (
+              <div
+                key={item.name}
+                className="rounded-lg p-6 bg-black flex gap-8 items-center transition-colors overflow-hidden cursor-pointer"
+                onClick={() => handleEnvClick(item.name)}
+                
+              >
+                <div className="h-12 w-12 rounded-full bg-[#3a558c] flex items-center justify-center" >
+                  <span className="font-bold text-xl">{index + 1}</span>
+                </div>
+                <p className="text-gray-400 w-fit">{item.name.toLocaleUpperCase()}</p>
+              </div>
+            ))}
+          </div>
+
+          {openedEnv && (
+            <div className="fixed top-0 left-0 z-[999] w-screen h-screen transition-all bg-black">
+              <div
+                className="absolute h-20 w-20 top-20 left-4 z-50 text-white px-4 py-2 rounded cursor-pointer"
+                onClick={() => setopendedEnv(null)}
+              >
+              <img src="https://img.icons8.com/?size=100&id=26191&format=png&color=000000" alt="" />
+              </div>
+
+              <Canvas
+                className="w-full h-full absolute inset-0"
+                camera={{ position: [0, 1, 5] }}
+              >
+                <ambientLight intensity={0.5} />
+                <Environment preset={openedEnv} background />
+                <OrbitControls enableZoom />
+              </Canvas>
+            </div>
+          )}
+        </div>
+      </section>
+
       <section id="features" className="relative py-20">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -431,7 +521,7 @@ export default function Home() {
       </section>
 
       {/* Contact Section */}
-      <section id="threejs-services" className="relative py-20">
+      <section id="services" className="relative py-20">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center mb-12">
             <h2 className="text-3xl text-black md:text-5xl font-bold mb-4">
@@ -472,7 +562,7 @@ export default function Home() {
             ].map((service, index) => (
               <div
                 key={index}
-                className="group relative overflow-hidden rounded-lg aspect-5/1 bg-gray-800"
+                className="group relative overflow-hidden rounded-lg aspect-5/2 bg-gray-800"
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-100 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
                   <h3 className="text-xl font-bold text-white ">
@@ -572,8 +662,6 @@ export default function Home() {
                     GitHub
                   </Link>
                 </li>
-               
-                
               </ul>
             </div>
           </div>
