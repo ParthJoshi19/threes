@@ -4,7 +4,7 @@ import { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { useFrame } from "@react-three/fiber";
 import { Mesh } from "three";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import {
   OrbitControls,
   useGLTF,
@@ -151,7 +151,6 @@ export default function Home() {
   interface HandleEnvClickProps {
     preset: string;
   }
-
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white">
@@ -366,35 +365,69 @@ export default function Home() {
         </div>
       </section>
 
-
       <section className="relative ">
         <div className="text-center w-full h-full px-4">
           <h3 className="text-3xl text-black md:text-5xl font-bold mb-4">
             Want to Explore?
           </h3>
+          <p className="text-lg text-white max-w-2xl mx-auto">
+            Wait for seconds it will take few time to load Environment
+          </p>
           <div className="grid md:grid-cols-3 gap-8">
             {[
-              { name: "sunset", bg_img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvgF9yUTGoqYHUpeBX2EIleyAHJiv59BVxgA&s" },
-              { name: "dawn", bg_img: "https://source.unsplash.com/600x400/?dawn" },
-              { name: "night", bg_img: "https://source.unsplash.com/600x400/?night" },
-              { name: "warehouse", bg_img: "https://source.unsplash.com/600x400/?warehouse" },
-              { name: "forest", bg_img: "https://source.unsplash.com/600x400/?forest" },
-              { name: "apartment", bg_img: "https://source.unsplash.com/600x400/?apartment" },
-              { name: "studio", bg_img: "https://source.unsplash.com/600x400/?studio" },
-              { name: "city", bg_img: "https://source.unsplash.com/600x400/?city" },
-              { name: "park", bg_img: "https://source.unsplash.com/600x400/?park" },
-              { name: "lobby", bg_img: "https://source.unsplash.com/600x400/?lobby" },
+              {
+                name: "sunset",
+                bg_img:
+                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvgF9yUTGoqYHUpeBX2EIleyAHJiv59BVxgA&s",
+              },
+              {
+                name: "dawn",
+                bg_img: "https://source.unsplash.com/600x400/?dawn",
+              },
+              {
+                name: "night",
+                bg_img: "https://source.unsplash.com/600x400/?night",
+              },
+              {
+                name: "warehouse",
+                bg_img: "https://source.unsplash.com/600x400/?warehouse",
+              },
+              {
+                name: "forest",
+                bg_img: "https://source.unsplash.com/600x400/?forest",
+              },
+              {
+                name: "apartment",
+                bg_img: "https://source.unsplash.com/600x400/?apartment",
+              },
+              {
+                name: "studio",
+                bg_img: "https://source.unsplash.com/600x400/?studio",
+              },
+              {
+                name: "city",
+                bg_img: "https://source.unsplash.com/600x400/?city",
+              },
+              {
+                name: "park",
+                bg_img: "https://source.unsplash.com/600x400/?park",
+              },
+              {
+                name: "lobby",
+                bg_img: "https://source.unsplash.com/600x400/?lobby",
+              },
             ].map((item, index) => (
               <div
                 key={item.name}
                 className="rounded-lg p-6 bg-black flex gap-8 items-center transition-colors overflow-hidden cursor-pointer"
                 onClick={() => setopendedEnv(item.name)}
-                
               >
-                <div className="h-12 w-12 rounded-full bg-[#3a558c] flex items-center justify-center" >
+                <div className="h-12 w-12 rounded-full bg-[#3a558c] flex items-center justify-center">
                   <span className="font-bold text-xl">{index + 1}</span>
                 </div>
-                <p className="text-gray-400 w-fit">{item.name.toLocaleUpperCase()}</p>
+                <p className="text-gray-400 w-fit">
+                  {item.name.toLocaleUpperCase()}
+                </p>
               </div>
             ))}
           </div>
@@ -405,7 +438,10 @@ export default function Home() {
                 className="absolute h-20 w-20 top-20 left-4 z-50 text-white px-4 py-2 rounded cursor-pointer"
                 onClick={() => setopendedEnv(null)}
               >
-              <img src="https://img.icons8.com/?size=100&id=26191&format=png&color=000000" alt="" />
+                <img
+                  src="https://img.icons8.com/?size=100&id=26191&format=png&color=000000"
+                  alt=""
+                />
               </div>
 
               <Canvas
@@ -413,7 +449,7 @@ export default function Home() {
                 camera={{ position: [0, 1, 5] }}
               >
                 <ambientLight intensity={0.5} />
-                <ShowEnvironment preset={openedEnv}  />
+                <ShowEnvironment preset={openedEnv} />
                 <OrbitControls enableZoom />
               </Canvas>
             </div>
