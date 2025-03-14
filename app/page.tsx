@@ -148,9 +148,10 @@ export default function Home() {
 
   const [openedEnv, setopendedEnv] = useState(null);
 
-  const handleEnvClick = (preset) => {
-    setopendedEnv(preset);
-  };
+  interface HandleEnvClickProps {
+    preset: string;
+  }
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-gray-900 text-white">
@@ -387,7 +388,7 @@ export default function Home() {
               <div
                 key={item.name}
                 className="rounded-lg p-6 bg-black flex gap-8 items-center transition-colors overflow-hidden cursor-pointer"
-                onClick={() => handleEnvClick(item.name)}
+                onClick={() => setopendedEnv(openedEnv)}
                 
               >
                 <div className="h-12 w-12 rounded-full bg-[#3a558c] flex items-center justify-center" >
